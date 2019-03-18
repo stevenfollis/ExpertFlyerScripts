@@ -8,18 +8,30 @@
 // ==/UserScript==
 
 function highlightAvailable() {
-	var nodes = document.getElementsByClassName("col colSeats"); 
-	
-	var nodesCount = nodes.length;
-	for (i=0; i<nodes.length; i++)
-	{
-		var availCount = parseInt(nodes[i].textContent);
-		debugger;
-		if (availCount > 0)
-		{
-			nodes[i].style.backgroundColor="LightGreen";
-		}
-	}
+
+  const success = '#daffe0';
+
+  var nodes = document.getElementsByClassName("col colSeats");
+
+  var nodesCount = nodes.length;
+  for (let i = 0; i < nodes.length; i++) {
+    var availCount = parseInt(nodes[i].textContent);
+
+    if (availCount > 0) {
+
+      // Color entire flight row
+      nodes[i].closest('tr.row').style.backgroundColor = success;
+
+      // Color available class
+      nodes[i].closest('tr.rowAvailClasses').style.fontWeight = "bold";
+
+    } else if (!availCount) {
+      // Color unavailable class
+      if (nodes[i].closest('tr.rowAvailClasses')) {
+        nodes[i].closest('tr.rowAvailClasses').style.color = "rgba(0,0,0,.5)";
+      }
+    }
+  }
 }
 
 highlightAvailable();
