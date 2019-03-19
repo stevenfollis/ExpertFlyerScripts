@@ -1,37 +1,46 @@
 // ==UserScript==
-// @name        EF Availability Highlighter
-// @namespace   ST
-// @description Expert Flyer Highlighter
-// @include     https://www.expertflyer.com/air/awardUpgradeResults.do
-// @version     1
-// @grant       none
+// @name         New Userscript
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://www.expertflyer.com/air/awardUpgradeResults.do
+// @grant        none
 // ==/UserScript==
 
-function highlightAvailable() {
+(function() {
+    'use strict';
 
-  const success = '#daffe0';
+    // Set variables
+    const success = '#daffe0';
+    const nodes = document.getElementsByClassName("col colSeats");
+    const nodesCount = nodes.length;
 
-  var nodes = document.getElementsByClassName("col colSeats");
+    // Loop through results
+    for (let i = 0; i < nodes.length; i++) {
+      
+      // Parse node value
+      let availCount = parseInt(nodes[i].textContent);
+  
+      // Check if there are seats available
+      if (availCount > 0) {
+        // More than 0 seats are available
 
-  var nodesCount = nodes.length;
-  for (let i = 0; i < nodes.length; i++) {
-    var availCount = parseInt(nodes[i].textContent);
+        // Color entire flight row
+        nodes[i].closest('tr.row').style.backgroundColor = success;
+  
+        // Color available class
+        nodes[i].closest('tr.rowAvailClasses').style.fontWeight = "bold";
+  
+      } else if (availCount <= 0 || !availCount) {
+        // Less than 0 seats are available or this is text ex. "No"
 
-    if (availCount > 0) {
+        // Color unavailable class
+        if (nodes[i].closest('tr.rowAvailClasses')) {
+          nodes[i].closest('tr.rowAvailClasses').style.color = "rgba(0,0,0,.5)";
+        }
 
-      // Color entire flight row
-      nodes[i].closest('tr.row').style.backgroundColor = success;
-
-      // Color available class
-      nodes[i].closest('tr.rowAvailClasses').style.fontWeight = "bold";
-
-    } else if (!availCount) {
-      // Color unavailable class
-      if (nodes[i].closest('tr.rowAvailClasses')) {
-        nodes[i].closest('tr.rowAvailClasses').style.color = "rgba(0,0,0,.5)";
       }
     }
-  }
-}
 
-highlightAvailable();
+})();
