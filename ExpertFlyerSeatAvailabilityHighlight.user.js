@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         New Userscript
+// @name         ExpertFlyer Highlighter
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  try to take over the world!
-// @author       You
+// @version      1.0
+// @description  Easier browsing on ExpertFlyer.com through highlighting
+// @author       Steven Follis
 // @match        https://www.expertflyer.com/air/awardUpgradeResults.do
 // @grant        none
 // ==/UserScript==
@@ -14,7 +14,6 @@
     // Set variables
     const success = '#daffe0';
     const nodes = document.getElementsByClassName("col colSeats");
-    const nodesCount = nodes.length;
 
     // Loop through results
     for (let i = 0; i < nodes.length; i++) {
